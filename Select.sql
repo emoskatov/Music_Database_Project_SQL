@@ -47,8 +47,8 @@ FROM
     track
 WHERE
     -- Сделал приведение к нижнему регистру для нерегистрозависимому поиску
-    lower(title) LIKE '% my %'
-    OR lower(title) LIKE '% мой %';
+    -- Исправил по комментариям на способо пересечения между двумя массивами, короче и лаконичнее
+    string_to_array(lower("title"), ' ') & & ARRAY ['my','мой'];
 
 -- Задание 3.1
 SELECT
@@ -89,8 +89,20 @@ SELECT
 FROM
     artist AS a
     JOIN artist_album AS aa ON a.id = aa.artist_id
-    JOIN album AS a2 ON a2.id = aa.album_id -- Так должно быть быстрее для запроса когда мы в Join пишем условие, так как отсекается часть данных на этапе соединения таблиц
-    AND NOT a2.year_of_release = 2020;
+    JOIN album AS a2 ON a2.id = aa.album_id
+WHERE
+    a.name NOT IN (
+        SELECT
+            a.name
+        FROM
+            artist AS a
+            JOIN artist_album AS aa ON a.id = aa.artist_id
+            JOIN album AS a2 ON a2.id = aa.album_id
+        WHERE
+            a2.year_of_release = 2020
+    )
+GROUP BY
+    a.name;
 
 -- Задание 3.5   
 SELECT
@@ -113,9 +125,10 @@ FROM
     JOIN artist_album AS aa ON a.id = aa.artist_id
     JOIN album AS a2 ON a2.id = aa.album_id
 GROUP BY
-    a2.title
+    a2.title,
+    a.id
 HAVING
-    count(ag.artist_id) > 1;
+    count(ag.music_genre_id) > 1;
 
 --Дополнительное задание 4.2
 SELECT
