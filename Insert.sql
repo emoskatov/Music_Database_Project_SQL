@@ -43,9 +43,9 @@ VALUES
     (12, 1),
     (13, 1),
     (14, 9),
-    (3,4),
-    (3,11),
-    (3,2);
+    (3, 4),
+    (3, 11),
+    (3, 2);
 
 INSERT INTO
     album (title, year_of_release)
@@ -81,10 +81,10 @@ VALUES
     ('In Too Deep', '3:15', 9),
     ('Spirit on the Wate', '7:42', 10),
     ('If You Need My Love Tonigh', '4:30', 11),
-    ('Do You Still Remember','5:10',11),
-    ('Nettie Moore','6:53',10),
-    ('Marsh','3:21',9),
-    ('Early One Morning','4:02',8);
+    ('Do You Still Remember', '5:10', 11),
+    ('Nettie Moore', '6:53', 10),
+    ('Marsh', '3:21', 9),
+    ('Early One Morning', '4:02', 8);
 
 INSERT INTO
     collection (name, year_of_release)
@@ -110,6 +110,30 @@ VALUES
     (7, 3),
     (8, 4),
     (9, 4);
+
+INSERT INTO
+    -- Тестовые записи для тестирования SELECT запроса с мой/my
+    track (title, duration)
+VALUES
+    ('my own', '1:02'),
+    ('own my', '2:02'),
+    ('my', '3:02'),
+    ('oh my god', '4:02'),
+    ('myself by', '1:02'),
+    ('by myself by', '2:02');
+
+-- Для тестирования задания 3.4 дополнительно создал несуществующий альбом с 2020 годом у исполнителя
+INSERT INTO
+    album (title, year_of_release)
+VALUES
+    ('Graduation', 2010),
+    ('JESUS IS KING', 2020);
+
+INSERT INTO
+    artist_album (artist_id, album_id) -- генерация связей исполнителя и альбома дополнительной проверки
+VALUES
+    (15, 12),
+    (15, 13);
 
 -- Дополнительные команды которые могут понадобится 
 -- Если мы удаляем данные из таблицы, инкремент запоминает последний испольщованный ID поэтому при тестировании возникла необходимость сбросить счетчик принудительно
